@@ -3,43 +3,57 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
+import User from '../database/models/User';
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
 import { Response } from 'superagent';
+import userMock from './mocks';
+
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+describe('Testa a rota POST /login', () => {
+  let chaiHttpResponse: Response;
 
-  // let chaiHttpResponse: Response;
+  before(async () => {
+    sinon
+      .stub(User, "findOne")
+      .resolves({
+        ...userMock,
+      } as User);
+  });
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
+  after(()=>{
+    (User.findOne as sinon.SinonStub).restore();
+  })
 
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
+  it('verifica se o usuário foi criado com sucesso', async () => {
+    chaiHttpResponse = await chai
+       .request(app)
+       .post('/login')
+        .send({ email: userMock.email, password: userMock.password });
 
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
+    expect(chaiHttpResponse.status).to.equal(200);
+  });
 
-  //   expect(...)
-  // });
+  it('verifica se ao passar uma senha inválida o usuário não é logado', async () => {
+    chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: userMock.email, password: 2 });
+    
+    expect(chaiHttpResponse.status).to.equal(400);
+    expect(chaiHttpResponse.body).to.have.equal({ message: 'Incorrect email or password' });
+  });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('verifica se o usuário não enviar o email a requisição falha', async () => {
+    chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ password: userMock.password });
+    
+    expect(chaiHttpResponse.status).to.equal(400);
+    expect(chaiHttpResponse.body).to.have.equal({ message: 'All fields must be filled' });
   });
 });
