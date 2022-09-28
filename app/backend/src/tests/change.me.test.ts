@@ -7,6 +7,7 @@ import User from '../database/models/User';
 import { app } from '../app';
 import { Response } from 'superagent';
 import userMock from './mocks';
+import UserService from '../database/services/userService';
 
 
 chai.use(chaiHttp);
@@ -15,16 +16,18 @@ const { expect } = chai;
 
 describe('Testa a rota POST /login', () => {
   let chaiHttpResponse: Response;
+  const userModel = User;
+  const userService = new UserService(userModel);
 
-  before(async () => {
+  beforeEach(async () => {
     sinon
-      .stub(User, "findOne")
+      .stub(userService, "getLogin")
       .resolves({
         ...userMock,
       } as User);
   });
 
-  after(()=>{
+  afterEach(()=>{
     (User.findOne as sinon.SinonStub).restore();
   })
 
