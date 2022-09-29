@@ -37,17 +37,14 @@ class MatchService {
     }
   };
 
-  static findTeam = async (teamId1: number, teamId2: number) => {
-    const team1 = await Team.findOne({ where: { teamId1 } });
-    const team2 = await Team.findOne({ where: { teamId2 } });
-
-    if (!team1 || !team2) return false;
-    return true;
-  };
-
   static patchMatch = async (id: number) => {
     const match = await Match.update({ inProgress: false }, { where: { id } });
     console.log(match);
+    return match;
+  };
+
+  static updateMatchGoals = async (id: number, homeTeamGoals: number, awayTeamGoals: number) => {
+    const match = await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     return match;
   };
 }

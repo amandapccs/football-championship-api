@@ -35,6 +35,13 @@ class MatchController {
     await MatchService.patchMatch(Number(id));
     return res.status(200).json({ message: 'Finished' });
   };
+
+  static updateMatchGoals = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    await MatchService.updateMatchGoals(Number(id), homeTeamGoals, awayTeamGoals);
+    return res.status(200).json({ message: 'Goals updated!' });
+  };
 }
 
 export default MatchController;
