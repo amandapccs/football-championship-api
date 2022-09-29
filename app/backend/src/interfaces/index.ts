@@ -23,8 +23,11 @@ interface IModel<T extends Model> {
   findOne(options: FindOptions<T>): Promise<T | null>;
 }
 
-interface IUserService {
-  getLogin(email: string): Promise<any>;
+interface IMatch {
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
 }
 
-export { ILoginPayload, IUser, ITokenPayload, IModel, IUserService };
+export { ILoginPayload, IUser, ITokenPayload, IModel, IMatch };

@@ -1,3 +1,4 @@
+import { IMatch } from '../../interfaces';
 import Match from '../models/Match';
 import Team from '../models/Team';
 
@@ -19,6 +20,18 @@ class MatchService {
         { model: Team, as: 'teamHome', attributes: ['teamName'] },
         { model: Team, as: 'teamAway', attributes: ['teamName'] },
       ],
+    });
+    return match;
+  };
+
+  static postMatch = async (matchDetails: IMatch) => {
+    const { homeTeam, homeTeamGoals, awayTeam, awayTeamGoals } = matchDetails;
+    const match = await Match.create({
+      homeTeam,
+      homeTeamGoals,
+      awayTeam,
+      awayTeamGoals,
+      inProgress: true,
     });
     return match;
   };
