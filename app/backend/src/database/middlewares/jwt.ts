@@ -5,7 +5,6 @@ const jwtOptions: SignOptions = { expiresIn: '4d', algorithm: 'HS256' };
 
 const generateToken = async (email: string): Promise<string> => {
   const token = sign({ email }, SECRET, jwtOptions);
-  // console.log(token);
 
   return token;
 };

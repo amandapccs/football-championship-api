@@ -33,6 +33,12 @@ class MatchController {
       res.status(401).json({ message: 'Token must be a valid token' });
     }
   };
+
+  static patchMatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    await MatchService.patchMatch(Number(id));
+    return res.status(200).json({ message: 'Finished' });
+  };
 }
 
 export default MatchController;

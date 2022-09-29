@@ -23,7 +23,6 @@ class UserController {
     }
 
     const token = await generateToken(email);
-    console.log(token);
     return res.status(200).json({ token });
   };
 
