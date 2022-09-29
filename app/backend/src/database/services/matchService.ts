@@ -26,14 +26,23 @@ class MatchService {
 
   static postMatch = async (matchDetails: IMatch) => {
     const { homeTeam, homeTeamGoals, awayTeam, awayTeamGoals } = matchDetails;
-    const match = await Match.create({
-      homeTeam,
-      homeTeamGoals,
-      awayTeam,
-      awayTeamGoals,
-      inProgress: true,
-    });
-    return match;
+    if (homeTeam === awayTeam) return 'Same team';
+    try {
+      const match = await Match.create({
+        homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress: true,
+      });
+      return match;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  static findTeam = async (teamId1: number, teamId2: number) => {
+    const team1 = await Team.findOne({ where: { teamId1 } });
+    const team2 = await Team.findOne({ where: { teamId2 } });
+
+    if (!team1 || !team2) return false;
+    return true;
   };
 
   static patchMatch = async (id: number) => {

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { verifyToken } from '../middlewares/jwt';
 import MatchService from '../services/matchService';
 
 class MatchController {
@@ -18,20 +17,17 @@ class MatchController {
 
   static postMatch = async (req: Request, res: Response) => {
     const { homeTeam, homeTeamGoals, awayTeam, awayTeamGoals } = req.body;
-    const token = req.headers.authorization;
-    if (!token) { return res.status(401).json({ message: 'Token must be a valid token' }); }
-    try {
-      verifyToken(token);
-      const match = await MatchService.postMatch({
-        homeTeam,
-        homeTeamGoals,
-        awayTeam,
-        awayTeamGoals,
-      });
-      return res.status(201).json(match);
-    } catch (error) {
-      res.status(401).json({ message: 'Token must be a valid token' });
+    const match = await MatchService.postMatch({
+      homeTeam, homeTeamGoals, awayTeam, awayTeamGoals,
+    });
+
+    if (!match) return res.status(404).json({ message: 'There is no team with such id!' });
+
+    if (match === 'Same team') {
+      return res.status(401)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
     }
+    return res.status(201).json(match);
   };
 
   static patchMatch = async (req: Request, res: Response) => {
