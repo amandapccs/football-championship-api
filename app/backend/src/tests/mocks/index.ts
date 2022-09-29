@@ -14,6 +14,21 @@ const userMock2 = {
   password: 'secret_admin',
 };
 
+const teamsMock = [
+	{
+		id: 1,
+		teamName: "Avaí/Kindermann"
+	},
+	{
+		id: 2,
+		teamName: "Bahia"
+	},
+	{
+		id: 16,
+		teamName: "São Paulo"
+	}
+]
+
 const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInVzZXJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2NjQzOTA5NDgsImV4cCI6MTY2NDczNjU0OH0.qLfEknMRmjSxeYvv-DHbYd9M-kjapIMyTby296wW8KU"
 
-export { userMock, userMock2, mockToken };
+export { userMock, userMock2, mockToken, teamsMock };
