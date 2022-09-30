@@ -39,7 +39,6 @@ class MatchService {
 
   static patchMatch = async (id: number) => {
     const match = await Match.update({ inProgress: false }, { where: { id } });
-    console.log(match);
     return match;
   };
 
