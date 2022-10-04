@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import UserController from '../controllers/userController';
+import userController from '../factories/userFactory';
 
 const router = Router();
 
-router.post('/login', UserController.login);
-router.get('/login/validate', UserController.validateToken);
+router.post('/login', userController.login.bind(userController));
+router.get('/login/validate', userController.validateToken.bind(userController));
 
 export default router;

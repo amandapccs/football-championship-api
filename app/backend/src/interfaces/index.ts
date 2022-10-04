@@ -1,28 +1,8 @@
-import { FindOptions, Model } from 'sequelize';
-// import { Model } from 'sequelize/types';
+import User from '../database/models/User';
 
-interface ILoginPayload {
-  email: string;
-  password: string;
+interface IUserService {
+  getLogin(email: string): Promise<User | boolean>;
 }
-
-interface ITokenPayload {
-  email: string;
-  username: string;
-}
-
-interface IUser {
-  id: number;
-  username: string;
-  role: string;
-  email: string;
-  password?: string;
-}
-
-interface IModel<T extends Model> {
-  findOne(options: FindOptions<T>): Promise<T | null>;
-}
-
 interface IMatch {
   homeTeam: number;
   homeTeamGoals: number;
@@ -30,4 +10,4 @@ interface IMatch {
   awayTeamGoals: number;
 }
 
-export { ILoginPayload, IUser, ITokenPayload, IModel, IMatch };
+export { IMatch, IUserService };
