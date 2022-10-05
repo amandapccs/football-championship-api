@@ -28,7 +28,7 @@ const calculateEfficiency = (allPoints: number, allMatches: number) => {
   return efficiency;
 };
 
-const generateLeaderboard = ({ teamName, matchesAway }: any) => {
+const generateLeaderboardAway = ({ teamName, matchesAway }: any) => {
   const [goalsDone, goalsTaken, balance] = calculateGoals(matchesAway);
   const [wins, draws, losses, total] = calculateMatchResults(matchesAway);
   const teamEfficiency = calculateEfficiency(total, matchesAway.length);
@@ -47,7 +47,7 @@ const generateLeaderboard = ({ teamName, matchesAway }: any) => {
   };
 };
 
-const sortLeaderboard = (leaderboard: any) => {
+const sortLeaderboardAway = (leaderboard: any) => {
   const sort = leaderboard.sort((a: any, b: any) => {
     if (a.totalPoints < b.totalPoints) { return 1; }
     if (a.totalPoints > b.totalPoints) { return -1; }
@@ -64,4 +64,4 @@ const sortLeaderboard = (leaderboard: any) => {
   return sort;
 };
 
-export { generateLeaderboard, sortLeaderboard };
+export { generateLeaderboardAway, sortLeaderboardAway };

@@ -19,6 +19,12 @@ interface IMatchService {
     homeTeamGoals: number, awayTeamGoals: number): Promise<[number, IMatch[]]>;
 }
 
+interface ILeaderboardService {
+  getAll: () => Promise<Team[]>;
+  getAllAway: () => Promise<Team[]>;
+  getAllHome: () => Promise<Team[]>;
+}
+
 interface IMatch {
   homeTeam: number;
   homeTeamGoals: number;
@@ -26,4 +32,4 @@ interface IMatch {
   awayTeamGoals: number;
 }
 
-export { IMatch, IUserService, ITeamService, IMatchService };
+export { IMatch, IUserService, ITeamService, IMatchService, ILeaderboardService };
