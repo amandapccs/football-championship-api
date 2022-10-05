@@ -10,6 +10,15 @@ interface ITeamService {
   getTeamsById(id: number): Promise<Team | null>;
 }
 
+interface IMatchService {
+  getMatches(): Promise<IMatch[]>;
+  getMatchProgress(inProgressStatus: boolean): Promise<IMatch[]>;
+  postMatch(matchDetails: IMatch): Promise<IMatch | boolean | string>;
+  patchMatch(id: number): Promise<[number, IMatch[]]>;
+  updateMatchGoals(id: number,
+    homeTeamGoals: number, awayTeamGoals: number): Promise<[number, IMatch[]]>;
+}
+
 interface IMatch {
   homeTeam: number;
   homeTeamGoals: number;
@@ -17,4 +26,4 @@ interface IMatch {
   awayTeamGoals: number;
 }
 
-export { IMatch, IUserService, ITeamService };
+export { IMatch, IUserService, ITeamService, IMatchService };

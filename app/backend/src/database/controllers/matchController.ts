@@ -1,23 +1,24 @@
 import { Request, Response } from 'express';
-import MatchService from '../services/matchService';
+import { IMatchService } from '../../interfaces';
 
 class MatchController {
-  static getMatches = async (req: Request, res: Response) => {
+  constructor(private service: IMatchService) {}
+  async getMatches(req: Request, res: Response) {
     const { inProgress } = req.query;
     if (!inProgress) {
-      const matches = await MatchService.getMatches();
+      const matches = await this.service.getMatches();
       return res.status(200).json(matches);
     }
     if (inProgress) {
       const bool = inProgress === 'true';
-      const match = await MatchService.getMatchProgress(bool);
+      const match = await this.service.getMatchProgress(bool);
       return res.status(200).json(match);
     }
-  };
+  }
 
-  static postMatch = async (req: Request, res: Response) => {
+  async postMatch(req: Request, res: Response) {
     const { homeTeam, homeTeamGoals, awayTeam, awayTeamGoals } = req.body;
-    const match = await MatchService.postMatch({
+    const match = await this.service.postMatch({
       homeTeam, homeTeamGoals, awayTeam, awayTeamGoals,
     });
 
@@ -28,20 +29,20 @@ class MatchController {
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
     return res.status(201).json(match);
-  };
+  }
 
-  static patchMatch = async (req: Request, res: Response) => {
+  async patchMatch(req: Request, res: Response) {
     const { id } = req.params;
-    await MatchService.patchMatch(Number(id));
+    await this.service.patchMatch(Number(id));
     return res.status(200).json({ message: 'Finished' });
-  };
+  }
 
-  static updateMatchGoals = async (req: Request, res: Response) => {
+  async updateMatchGoals(req: Request, res: Response) {
     const { id } = req.params;
     const { homeTeamGoals, awayTeamGoals } = req.body;
-    await MatchService.updateMatchGoals(Number(id), homeTeamGoals, awayTeamGoals);
+    await this.service.updateMatchGoals(Number(id), homeTeamGoals, awayTeamGoals);
     return res.status(200).json({ message: 'Goals updated!' });
-  };
+  }
 }
 
 export default MatchController;
