@@ -1,7 +1,7 @@
 # Football Championship API
 
 # Contexto
-Este projeto trata-se de plicação na qual o usuário faz seu login, visualiza e cadastra jogos, podendo editar os gols da partida conforme necessário. Há também a opção de visualizar a tabela de classificação/ranking em certos endpoints.
+Este projeto trata-se de uma aplicação na qual o usuário faz seu login, visualiza e cadastra jogos, podendo editar os gols da partida conforme necessário. Há também a opção de visualizar a tabela de classificação/ranking em certos endpoints.
 
 # Habilidades desenvolvidas
 - Utilizar TypeScript;
